@@ -16,6 +16,8 @@ import Profile from './routes/Profile';
 import Login from './routes/Login';
 import Register from './routes/Register';
 import SetInfo from './routes/SetInfo';
+import Detail from './routes/Detail';
+import Notfound from './routes/Notfound';
 import { ConnectedRouter } from 'connected-react-router';
 import history from './store/history';
 // import './config.js';
@@ -33,7 +35,9 @@ ReactDOM.render(
                             <Route path="/login" component={Login}></Route>
                             <Route path="/register" component={Register}></Route>
                             <Route path="/setInfo" component={SetInfo}></Route>
-                            <Redirect to="/" />
+                            <Route path="/detail/:id" component={Detail} />
+                            <Route path="/notfound" component={Notfound} />
+                            <Redirect to="/notfound" />
                         </Switch>
                     </main>
                 </ConfigProvider>

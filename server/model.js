@@ -40,6 +40,33 @@ const models = {
             type: String,
         },
     },
+    movice: {
+        pic: String, // 图片
+        video: String, // 预告片地址
+        name: String, // 影片名字
+        director: String, // 导演
+        actor: [
+            {
+                actorName: String, // 演员名字
+                actorPic: String, // 演员图片
+            },
+        ], // 演员
+        language: String, // 语言
+        duration: String, // 时长
+        type: Array, // 类型
+        location: String, // 上映地点
+        releaseTime: String, // 上映时间
+        boxOffice: String, // 累计票房
+        desc: String, // 剧情简介
+        evaluation: [
+            {
+                uid: String, // 评价用户id
+                upic: String, // 评价用户头像
+                uscore: String, // 评分
+                utext: String, // 评论
+            },
+        ],
+    },
 };
 
 //批量生成
