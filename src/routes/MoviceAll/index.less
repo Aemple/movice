@@ -1,0 +1,82 @@
+.home {
+    width: 100%;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    h2 {
+        padding-left: 10px;
+        margin-top: 20px;
+        border-left: 5px solid #1890ff;
+        font-size: 22px;
+        font-weight: 800;
+    }
+    .homeChild {
+        width: 93%;
+        margin: 0 auto;
+        .carousel {
+            .ant-carousel {
+                .slick-slide {
+                    text-align: center;
+                    height: 386px;
+                    line-height: 386px;
+                    background: #364d79;
+                    overflow: hidden;
+                }
+                .slick-slide h3 {
+                    color: #fff;
+                }
+            }
+        }
+        .typeSelect {
+            margin: 30px 0;
+            padding: 20px;
+            width: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-around;
+            .base {
+                display: flex;
+                flex-direction: column;
+                margin-right: 20px;
+                border-left: 1px solid #f1ecec;
+                padding-left: 20px;
+                .name {
+                    margin-bottom: 10px;
+                }
+                .typeMovice {
+                    display: flex;
+                    flex-wrap: wrap;
+                    .typeItem {
+                        width: 20%;
+                        display: flex;
+                        justify-content: center;
+                        margin: 8px 0;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        .new {
+            width: 100%;
+            background-color: #fff;
+            overflow: hidden;
+            padding: 10px 20px;
+            .newAll {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .newItem {
+                width: 15%;
+                margin: 10px 0;
+                .newCard {
+                    .ant-card-meta-description {
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 3;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
+}

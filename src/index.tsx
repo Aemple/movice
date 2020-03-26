@@ -10,8 +10,9 @@ import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'antd/dist/antd.css';
 import './assets/css/common.less';
 import Tabs from './components/Tabs';
+import Footer from './components/Footer';
 import Home from './routes/Home';
-import Mine from './routes/Mine';
+import MoviceAll from './routes/MoviceAll';
 import Profile from './routes/Profile';
 import Login from './routes/Login';
 import Register from './routes/Register';
@@ -30,7 +31,7 @@ ReactDOM.render(
                     <main className="main-container">
                         <Switch>
                             <Route path="/" exact component={Home} />
-                            <Route path="/Mine" component={Mine} />
+                            <Route path="/moviceAll" component={MoviceAll} />
                             <Route path="/profile" component={Profile} />
                             <Route path="/login" component={Login}></Route>
                             <Route path="/register" component={Register}></Route>
@@ -40,6 +41,7 @@ ReactDOM.render(
                             <Redirect to="/notfound" />
                         </Switch>
                     </main>
+                    <Footer />
                 </ConfigProvider>
             </ConnectedRouter>
         </PersistGate>
