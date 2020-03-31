@@ -37,6 +37,7 @@ const Login = (props: Props) => {
                 <Form.Item
                     label="user"
                     name="user"
+                    className="testusername"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
                     <Input />
@@ -45,6 +46,7 @@ const Login = (props: Props) => {
                 <Form.Item
                     label="pwd"
                     name="pwd"
+                    className="testpwd"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
                     <Input.Password />
@@ -52,7 +54,7 @@ const Login = (props: Props) => {
 
                 <Form.Item {...tailLayout}>
                     {props.msg && <div className="errMsg">{props.msg}</div>}
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" className="testdenglu">
                         登陆
                     </Button>
                 </Form.Item>
