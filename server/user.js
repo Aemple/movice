@@ -4,6 +4,7 @@ const utils = require('utility');
 const Router = express.Router();
 const model = require('./model');
 const User = model.getModel('user');
+const Movice = model.getModel('movice');
 const _filter = { pwd: 0, __v: 0 };
 
 // User.create({ user: 'TEST1', pwd: '123456' }, function(err, doc) {
@@ -39,9 +40,26 @@ Router.post('/update', function(req, res) {
     });
 });
 
+Router.post('/evaluationUpdate', function(req, res) {
+    const { moviceId, body } = req.body;
+    User.findOneAndUpdate({ _id: moviceId }, body, function(err, doc) {
+        if (err) {
+            console.log(err, 'err');
+        }
+        Movice.find({}, function(err, doc) {
+            return res.json({ code: 0, data: doc, msg: '' });
+        });
+    });
+});
+
 Router.get('/test', function(req, res) {
     User.find({}, function(err, doc) {
         return res.json({ code: 0, data: doc });
+    });
+});
+Router.get('/getMoviceData', function(req, res) {
+    Movice.find({}, function(err, doc) {
+        return res.json({ code: 0, data: doc, msg: '' });
     });
 });
 
@@ -102,5 +120,35 @@ function md5Pwd(pwd) {
     const salt = 'money_is_good_3957x8yza6!@#IUHJh~~';
     return utils.md5(utils.md5(pwd + salt));
 }
+
+// movice
+Router.post('/create', function(req, res) {
+    const { name } = req.body;
+    const body = req.body;
+    Movice.findOne({ name }, function(err, doc) {
+        if (err) {
+            console.log(err, 'err1');
+            return res.json({ code: 1, moviceState: [], msg: '后端出错了' });
+        }
+        if (doc) {
+            return res.json({ code: 1, moviceState: [], msg: '电影名重复' });
+        }
+
+        Movice.create(body, function(err, doc) {
+            if (err) {
+                console.log(err, 'err2');
+                return res.json({ code: 1, moviceState: [], msg: '后端出错了' });
+            }
+            Movice.find({}, function(err, doc) {
+                if (err) {
+                    console.log(err, 'err3');
+                    return res.json({ code: 1, moviceState: [], msg: '后端出错了' });
+                }
+                console.log(doc, '所有数据');
+                return res.json({ code: 0, data: doc, msg: '' });
+            });
+        });
+    });
+});
 
 module.exports = Router;

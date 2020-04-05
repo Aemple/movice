@@ -1,4 +1,4 @@
-describe('First Test', () => {
+describe('Home Test', () => {
     it('Visit the app', () => {
         cy.visit('/');
         cy.contains('个人中心').click();

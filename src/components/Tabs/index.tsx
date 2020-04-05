@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, FireTwoTone } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { getMoviceData } from '../../store/actions/movice';
 import './index.less';
-const Tabs = () => {
+const Tabs = (props: any) => {
+    useEffect(() => {
+        props.getMoviceData();
+    }, []);
     return (
         <header>
             <div className="headLeft">
@@ -22,4 +27,4 @@ const Tabs = () => {
         </header>
     );
 };
-export default withRouter(Tabs);
+export default connect(state => state.movice, { getMoviceData })(withRouter(Tabs));

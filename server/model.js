@@ -45,6 +45,7 @@ const models = {
         video: String, // 预告片地址
         name: String, // 影片名字
         director: String, // 导演
+        directorPic: String, // 导演
         actor: [
             {
                 actorName: String, // 演员名字

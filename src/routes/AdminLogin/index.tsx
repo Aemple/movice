@@ -1,8 +1,8 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
-import { regisger } from '../../store/actions/profile';
+import { login } from '../../store/actions/profile';
 import './index.less';
 interface Params {}
 type Props = PropsWithChildren<RouteComponentProps<Params>>;
@@ -15,9 +15,14 @@ const tailLayout = {
     wrapperCol: { offset: 8, span: 8 },
 };
 
-const Register = (props: Props) => {
+const AdminLogin = (props: Props) => {
+    const [errMsg, SeterrMsg] = useState<string>('');
     const onFinish = values => {
-        props.regisger(values);
+        if (values.user !== 'admin_test') {
+            SeterrMsg('用户名或密码不正确');
+        } else {
+            props.login(values);
+        }
     };
 
     // const onFinishFailed = errorInfo => {
@@ -25,8 +30,8 @@ const Register = (props: Props) => {
     // };
     return (
         <>
-            {props.user ? <Redirect to="/setInfo" /> : null}
-            <div className="header">注 册</div>
+            {props.user ? <Redirect to="/profile" /> : null}
+            <div className="header">管理员登陆</div>
             <Form
                 {...layout}
                 name="Register"
@@ -37,7 +42,7 @@ const Register = (props: Props) => {
                 <Form.Item
                     label="user"
                     name="user"
-                    className="testRuser"
+                    className="testusernameadmin"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
                     <Input />
@@ -46,16 +51,7 @@ const Register = (props: Props) => {
                 <Form.Item
                     label="pwd"
                     name="pwd"
-                    className="testRpwd"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                    label="repeatpwd"
-                    name="repeatpwd"
-                    className="testRrepeatpwd"
+                    className="testpwdadmin"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
                     <Input.Password />
@@ -63,12 +59,13 @@ const Register = (props: Props) => {
 
                 <Form.Item {...tailLayout}>
                     {props.msg && <div className="errMsg">{props.msg}</div>}
-                    <Button type="primary" htmlType="submit" className="testzhuce">
-                        注册
+                    {errMsg && <div className="errMsg">{errMsg}</div>}
+                    <Button type="primary" htmlType="submit" className="testdengluadmin">
+                        登陆
                     </Button>
                 </Form.Item>
             </Form>
         </>
     );
 };
-export default connect(state => state.profile, { regisger })(Register);
+export default connect(state => state.profile, { login })(AdminLogin);

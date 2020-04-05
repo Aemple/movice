@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Checkbox } from 'antd';
-import { RouteComponentProps, Redirect } from 'react-router-dom';
+import { RouteComponentProps, Redirect, Link } from 'react-router-dom';
 import { login } from '../../store/actions/profile';
 import './index.less';
 interface Params {}
@@ -53,6 +53,10 @@ const Login = (props: Props) => {
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
+                    <div className="other">
+                        <Link to="/adminlogin">管理员登陆</Link>
+                        <Link to="/register">去注册 >></Link>
+                    </div>
                     {props.msg && <div className="errMsg">{props.msg}</div>}
                     <Button type="primary" htmlType="submit" className="testdenglu">
                         登陆

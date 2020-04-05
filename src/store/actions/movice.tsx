@@ -5,8 +5,7 @@ function errorMsg(msg: string) {
 }
 
 function authSuccess(obj: any) {
-    const { pwd, ...data } = obj;
-    return { type: AUTH_SUCCESS, payload: data };
+    return { type: AUTH_SUCCESS, payload: obj };
 }
 
 export function loadData(userinfo: any) {
@@ -17,11 +16,37 @@ export function logoutSubmit() {
     return { type: LOGOUT };
 }
 
-export function update(data: any) {
+export function create(data: any) {
     return dispatch => {
-        axios.post('/user/update', data).then(res => {
+        axios.post('/user/create', data).then(res => {
             if (res.status === 200 && res.data.code === 0) {
                 dispatch(authSuccess(res.data.data));
+            } else {
+                dispatch(errorMsg(res.data.msg));
+            }
+        });
+    };
+}
+
+export function getMoviceData() {
+    return dispatch => {
+        axios.get('/user/getMoviceData').then(res => {
+            if (res.status === 200 && res.data.code === 0) {
+                console.log('data-======', res.data.data);
+
+                dispatch(authSuccess({ moviceState: res.data.data, msg: res.data.msg }));
+            } else {
+                dispatch(errorMsg(res.data.msg));
+            }
+        });
+    };
+}
+
+export function evaluationUpdate(data: any) {
+    return dispatch => {
+        axios.post('/user/evaluationUpdate', data).then(res => {
+            if (res.status === 200 && res.data.code === 0) {
+                dispatch(authSuccess({ moviceState: res.data.data, msg: res.data.msg }));
             } else {
                 dispatch(errorMsg(res.data.msg));
             }
@@ -33,7 +58,7 @@ export function login({ user, pwd }: any) {
     return dispatch => {
         axios.post('/user/login', { user, pwd }).then(res => {
             if (res.status === 200 && res.data.code === 0) {
-                dispatch(authSuccess(res.data.data));
+                dispatch(authSuccess({ moviceState: res.data.data, msg: res.data.msg }));
             } else {
                 dispatch(errorMsg(res.data.msg));
             }

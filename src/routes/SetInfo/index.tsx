@@ -17,7 +17,7 @@ class SetInfo extends React.Component<Props, State> {
             location: '',
             school: '',
             avatar: '',
-            love: [],
+            love: ['战争', '科幻'],
             phone: '',
             gender: '男',
         };
@@ -59,7 +59,7 @@ class SetInfo extends React.Component<Props, State> {
                             return (
                                 <Card.Grid className="cardItem">
                                     <div
-                                        className="cardImg"
+                                        className={`cardImg test${item.text}`}
                                         onClick={() => this.onChange('avatar', item.avatar)}
                                     >
                                         <img src={item.avatar} />
@@ -86,6 +86,7 @@ class SetInfo extends React.Component<Props, State> {
                                 <Input
                                     onChange={e => this.onChange('age', e.target.value)}
                                     placeholder="请输入年龄"
+                                    className="testage"
                                 />
                             </div>
                         </div>
@@ -107,6 +108,7 @@ class SetInfo extends React.Component<Props, State> {
                                 onChange={e => this.onChange('phone', e.target.value)}
                                 placeholder="Autosize height based on content lines"
                                 autoSize
+                                className="testphone"
                             />
                         </div>
                         <div className="textArea">
@@ -115,6 +117,7 @@ class SetInfo extends React.Component<Props, State> {
                                 onChange={e => this.onChange('school', e.target.value)}
                                 placeholder="Autosize height based on content lines"
                                 autoSize
+                                className="testschool"
                             />
                         </div>
                         <div className="textArea">
@@ -123,6 +126,7 @@ class SetInfo extends React.Component<Props, State> {
                                 onChange={e => this.onChange('location', e.target.value)}
                                 placeholder="Autosize height based on content lines"
                                 autoSize
+                                className="testlocation"
                             />
                         </div>
                         <div className="textArea">
@@ -131,6 +135,7 @@ class SetInfo extends React.Component<Props, State> {
                                 onChange={e => this.onChange('desc', e.target.value)}
                                 placeholder="Autosize height based on content lines"
                                 autoSize={{ minRows: 3, maxRows: 5 }}
+                                className="testdesc"
                             />
                         </div>
                         <Button
@@ -139,6 +144,7 @@ class SetInfo extends React.Component<Props, State> {
                                 this.props.update(this.state);
                                 this.props.history.push('/profile');
                             }}
+                            className="testtijiao"
                         >
                             提交
                         </Button>

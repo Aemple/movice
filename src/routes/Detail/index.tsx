@@ -1,7 +1,11 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Button, Tag, Modal, Rate, Input, Divider, Card } from 'antd';
+import { evaluationUpdate } from '../../store/actions/movice';
+import useDemo from '../../echarts/useDemo';
+import demoConfig from '../../echarts/config/demoConfig';
+import gaugeConfig from '../../echarts/config/gaugeConfig';
 import './index.less';
 interface Params {}
 type Props = PropsWithChildren<RouteComponentProps<Params>>;
@@ -22,11 +26,29 @@ const scoreObj = {
 };
 
 const Detail = (props: Props) => {
+    console.log(props, '1111');
     const [scoreVisible, setScoreVisible] = useState<boolean>(false);
     const [videoVisible, setVideoVisible] = useState<boolean>(false);
     const [scoreHover, setScoreHover] = useState<number>(3);
     const [score, setScore] = useState<number>(3);
     const [text, setText] = useState<string>('');
+    const chartRef = useRef(null);
+    const chartGaugeRef = useRef(null);
+    useDemo(chartRef, demoConfig(0.2));
+    useDemo(chartGaugeRef, gaugeConfig(66.6));
+
+    const moviceData = props.movice.moviceState[0];
+    const start = (arr: any, obj: any) => {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i]['uid'] == obj['uid']) {
+                arr[i] = {};
+                arr[i] = obj;
+                return arr;
+            }
+        }
+        arr.push(obj);
+    };
+
     const scoreText = () => {
         const result = scoreObj[scoreHover] ? scoreObj[scoreHover] : scoreObj[score];
         const resultArr = result.split('，');
@@ -180,6 +202,10 @@ const Detail = (props: Props) => {
                     </div>
                 </div>
                 <div className="detailRight">
+                    <h3>可视化数据</h3>
+                    <div style={{ width: '100%', height: '430px' }} ref={chartRef} />
+                    <h3>可视化数据2</h3>
+                    <div style={{ width: '100%', height: '430px' }} ref={chartGaugeRef} />
                     <h3>电影推荐</h3>
                     <div className="moviceTui">
                         <Card
@@ -250,6 +276,16 @@ const Detail = (props: Props) => {
                 visible={scoreVisible}
                 width={600}
                 onOk={() => {
+                    const obj = {
+                        uscore: score,
+                        uid: '5e738f3089832b779ed8dca3',
+                        utext: text,
+                        upic:
+                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAACJQAAAiUBweyXgQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAUCSURBVFiFrZVrUJRVGMeP2uQwgILcEYqcxsmBhiYN4r4LCV4gmdQYsomioMlbIamTY2WZAQYsFxHCCcuEIcCBiMtyvy20tlvmAPmlGWYY1C4fGJQ7C//OOfAuu+yu7xJ8+M97Oc/zf37vcy4vAUDMlcSVPCNxJqn0+lOIM7ktcSHDIS5khF576bWWvk+XOBGv5XiaFSR1Ir60SDsVzJRC6koCVgWAmr1ONbmM4ly0I1MUIn5FAFJn8sZyCy+V1IUk/i+AYCfyFDV4sFIA2omxsM1k67IBaOKNlRbXgahdFkC4E7GkiROrBUB3x7TEg9iYDUDnbf+qFV/UIbMBghzJ76sNEORE+s0C8CTEih4yc6sNQD3xnI3hNBh+vR3Zt1zzeD83VHwai8HqC8hODMVL7uuMxgU7kFdFAQIdyPvGkmO87XAq0guZb0uQdzgc3yRFokWWiL/kFzGrvqKnvuIz2Pu0heE0OJKT4h2wJxeXJn774cv4t1mGjoJkDFSnGBQUNFibhvb8E/i7KRPqomQDAPpxWeYAfK+b9FmMDze/XfIJlEWnUS87ivGeywbFJ5UFqKNjLOZW8Vn+Lt7fTb8DDqRUHMCBNAgJoZvX4s8b57RF+n84h1FFnskOTN0soKAfQ6Mq5M81KXFLp6BFHMCRKIWE/Z4bteb35Ol4LSIIGUejTQLUZCUhyt8biisn+TPrlNR1jW4H1KIAAfakU0h4y8dZ7+u+TNgL9bUzJgHY+vg8fhdfL8I73R0R7LRGKQrgb0t+FBLeDXTXGml+/tpk4aXSKGmsav5+l8fjWoCATaROFMDXhhQJCXu2rOcmMw25mCrLwExjrnjx9ss8dro6iz+HP/GYFuBFW3JdFGCHtf42HKg6j+n6nHkAuQ7AzXxoOjO5ZpWLu2KmNW8eoCoL/zSl6y1C3w0kWxTgeUvyAV2I2qTzsQG8nRpFgbatol1gsb8UIiM+TGf+CZi3OIA1iaTTgMWtuB4POnL0i9AFOSO/QKckZV70flaZrxczqriEne4Wuu0H8xYHsCLbtlvN/zwWTi8kBGzFhJHDZ5bt94U9r3ce0EPpiNST5wo/IubJvEUBttuSjSyYEQv0dF3gvZBtGKj8QrT9QzWpSIrw5jlCvt+meQDmLQpAf5kePJjK307f4IUNa3H6WDRUNWmYYYtwoQPsvlf+Fc6eOAhfm3U8luXwrWe/UNyK/449HgngR4gFDSwUEphYG9kCevZJW1inJYHU5COksYDvgtnubGi6ZNB0pONU8yU+ZpWeDK8t9jyH5ep6MW9WwygAHbxDNbckAcJ0uB2PgUN9EfwaK9BcVoexxlJMNhdjuuM7TLQWQ1Fei8CmCjjSGOeP3uQ5xrwWatwxANhhRUpNJMDHwQKB9SXwbylDVEslRnKbMNN5dXHbdRVhJKeRj7GYQHkJfBwtTQGA1TIAoFskiA6OLw2O2ilFSncvDna3cnOmvLo2jGbWYbyoHONXy/BQVoP82sVxFpva0499eyKMAYyzWkbXACWT0IBhITg2Lg6ZfUOQ/XEfmVRHVL8irL2KF7nW0IWxMhUelqtwXd7J34W2VeGwSs1jeU7fXRxKSNAtPsxqiP0NrdmJFR21e1C2YKSrjP57OK6+hbC2StTXd0NOFUrvj6l/o2N3DeKZDhx4ZYh5Mm/RbShI1n9fbsxMUGrfIN5RtCOxs32O3T8qlqrHVJ3/AD4ZN8/sIA7uAAAAAElFTkSuQmCC',
+                    };
+                    start(moviceData.evaluation, obj);
+                    console.log(moviceData.evaluation, '11113243');
+                    evaluationUpdate({ evaluation: moviceData.evaluation, moviceId: '111' });
                     setScoreVisible(false);
                 }}
                 onCancel={() => {
@@ -296,4 +332,4 @@ const Detail = (props: Props) => {
         </div>
     );
 };
-export default connect()(Detail);
+export default connect(state => state, { evaluationUpdate })(Detail);
