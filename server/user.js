@@ -41,12 +41,13 @@ Router.post('/update', function(req, res) {
 });
 
 Router.post('/evaluationUpdate', function(req, res) {
-    const { moviceId, body } = req.body;
-    User.findOneAndUpdate({ _id: moviceId }, body, function(err, doc) {
+    const { moviceId, evaluation } = req.body;
+    Movice.findOneAndUpdate({ _id: moviceId }, { evaluation: evaluation }, function(err, doc) {
         if (err) {
             console.log(err, 'err');
         }
         Movice.find({}, function(err, doc) {
+            // console.log(doc, '===doc===');
             return res.json({ code: 0, data: doc, msg: '' });
         });
     });

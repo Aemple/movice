@@ -31,7 +31,7 @@ const AdminLogin = (props: Props) => {
     return (
         <>
             {props.user ? <Redirect to="/profile" /> : null}
-            <div className="header">管理员登陆</div>
+            <div className="header">管理员登录</div>
             <Form
                 {...layout}
                 name="Register"
@@ -61,7 +61,7 @@ const AdminLogin = (props: Props) => {
                     {props.msg && <div className="errMsg">{props.msg}</div>}
                     {errMsg && <div className="errMsg">{errMsg}</div>}
                     <Button type="primary" htmlType="submit" className="testdengluadmin">
-                        登陆
+                        登录
                     </Button>
                 </Form.Item>
             </Form>

@@ -26,13 +26,12 @@ const Login = (props: Props) => {
     return (
         <>
             {props.user ? <Redirect to="/profile" /> : null}
-            <div className="header">登 陆</div>
+            <div className="header">登 录</div>
             <Form
                 {...layout}
                 name="Register"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                // onFinishFailed={onFinishFailed}
             >
                 <Form.Item
                     label="user"
@@ -54,12 +53,12 @@ const Login = (props: Props) => {
 
                 <Form.Item {...tailLayout}>
                     <div className="other">
-                        <Link to="/adminlogin">管理员登陆</Link>
+                        <Link to="/adminlogin">管理员登录</Link>
                         <Link to="/register">去注册 >></Link>
                     </div>
                     {props.msg && <div className="errMsg">{props.msg}</div>}
                     <Button type="primary" htmlType="submit" className="testdenglu">
-                        登陆
+                        登录
                     </Button>
                 </Form.Item>
             </Form>

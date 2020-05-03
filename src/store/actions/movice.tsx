@@ -43,11 +43,17 @@ export function getMoviceData() {
 }
 
 export function evaluationUpdate(data: any) {
+    console.log('===evaluationUpdate111===');
     return dispatch => {
+        console.log('===evaluationUpdate222===');
         axios.post('/user/evaluationUpdate', data).then(res => {
+            console.log('===gevaluationUpdate333===');
             if (res.status === 200 && res.data.code === 0) {
+                console.log('邓波测试111');
+                console.log('===evaluationUpdate444===');
                 dispatch(authSuccess({ moviceState: res.data.data, msg: res.data.msg }));
             } else {
+                console.log('===evaluationUpdate555===');
                 dispatch(errorMsg(res.data.msg));
             }
         });

@@ -63,7 +63,7 @@ const models = {
             {
                 uid: String, // 评价用户id
                 upic: String, // 评价用户头像
-                uscore: String, // 评分
+                uscore: Number, // 评分
                 utext: String, // 评论
             },
         ],

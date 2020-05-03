@@ -173,3 +173,21 @@
         }
     }
 }
+
+.right {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .rightItem {
+        width: 23%;
+        margin-bottom: 10px;
+        .rightCard {
+            .ant-card-meta-description {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+            }
+        }
+    }
+}

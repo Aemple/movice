@@ -60,6 +60,19 @@ const Profile = (props: Props) => {
                         {props.desc ? `${props.desc}` : '您还没有填写信息哦'}
                     </Card>
                     <div className="line"></div>
+                    {props.user === 'admin_test' && (
+                        <div className="adminButton">
+                            <Button
+                                type="primary"
+                                onClick={() => {
+                                    props.history.push('/addmovice');
+                                }}
+                            >
+                                录入电影
+                            </Button>
+                        </div>
+                    )}
+                    <div className="line"></div>
                     <div className="button">
                         <Button
                             type="primary"
@@ -76,7 +89,7 @@ const Profile = (props: Props) => {
                                 props.history.push('/login');
                             }}
                         >
-                            退出登陆
+                            退出登录
                         </Button>
                     </div>
                 </div>

@@ -1,6 +1,4 @@
 function gaugeConfig(dataItem = 88.6) {
-    console.log('______', dataItem);
-
     const echartsData = {
         tooltip: {
             formatter: '{a} <br/>{b} : {c}%',

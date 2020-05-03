@@ -9,11 +9,11 @@ function demoConfig(dataItem = 0.3) {
         legend: {
             orient: 'vertical',
             x: 'left',
-            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
+            data: ['10岁-20岁', '20岁-30岁', '30岁-40岁', '40岁-50岁', '50岁以上'],
         },
         series: [
             {
-                name: '访问来源',
+                name: '评价来源',
                 type: 'pie',
                 radius: ['50%', '70%'],
                 avoidLabelOverlap: false,
@@ -36,11 +36,11 @@ function demoConfig(dataItem = 0.3) {
                     },
                 },
                 data: [
-                    { value: 300 * dataItem, name: '直接访问' },
-                    { value: 310, name: '邮件营销' },
-                    { value: 234, name: '联盟广告' },
-                    { value: 135, name: '视频广告' },
-                    { value: 1548, name: '搜索引擎' },
+                    { value: 300 * dataItem, name: '10岁-20岁' },
+                    { value: 310, name: '20岁-30岁' },
+                    { value: 234, name: '30岁-40岁' },
+                    { value: 135, name: '40岁-50岁' },
+                    { value: 1548, name: '50岁以上' },
                 ],
             },
         ],

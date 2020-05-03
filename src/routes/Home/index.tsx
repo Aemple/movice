@@ -1,7 +1,8 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { Carousel, Card, Divider } from 'antd';
+import { getMoviceData } from '../../store/actions/movice';
 import './index.less';
 interface Params {}
 const { Meta } = Card;
@@ -93,6 +94,9 @@ const arr = [
 ];
 type Props = PropsWithChildren<RouteComponentProps<Params>>;
 const Home = (props: Props) => {
+    useEffect(() => {
+        props.getMoviceData();
+    }, []);
     return (
         <div className="home">
             <div className="homeChild">
@@ -117,21 +121,23 @@ const Home = (props: Props) => {
                     <h2>最新电影</h2>
                     <Divider orientation="right">查看更多</Divider>
                     <div className="newAll">
-                        {arr.map(item => (
+                        {props.movice.moviceState.slice(0, 12).map(item => (
                             <div className="newItem">
-                                <Card
-                                    hoverable
-                                    className="newCard"
-                                    cover={<img alt="example" src={item.pic} />}
-                                >
-                                    <Meta title={item.name} description={item.desc} />
-                                </Card>
+                                <Link to={`/detail/${item._id}`}>
+                                    <Card
+                                        hoverable
+                                        className="newCard"
+                                        cover={<img alt="example" src={item.pic} />}
+                                    >
+                                        <Meta title={item.name} description={item.desc} />
+                                    </Card>
+                                </Link>
                             </div>
                         ))}
                     </div>
                 </div>
                 <div className="type">
-                    <h2>喜 剧</h2>
+                    <h2>动 作</h2>
                     <Divider orientation="right">查看更多</Divider>
                     <div className="typeAll">
                         <div className="left">
@@ -160,22 +166,27 @@ const Home = (props: Props) => {
                             </div>
                         </div>
                         <div className="right">
-                            {arr.slice(0, 8).map(item => (
-                                <div className="rightItem">
-                                    <Card
-                                        hoverable
-                                        className="rightCard"
-                                        cover={<img alt="example" src={item.pic} />}
-                                    >
-                                        <Meta title={item.name} description={item.desc} />
-                                    </Card>
-                                </div>
-                            ))}
+                            {props.movice.moviceState
+                                .filter(item => item.type.includes('动作'))
+                                .slice(0, 8)
+                                .map(item => (
+                                    <div className="rightItem">
+                                        <Link to={`/detail/${item._id}`}>
+                                            <Card
+                                                hoverable
+                                                className="rightCard"
+                                                cover={<img alt="example" src={item.pic} />}
+                                            >
+                                                <Meta title={item.name} description={item.desc} />
+                                            </Card>
+                                        </Link>
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>
                 <div className="type">
-                    <h2>科 幻</h2>
+                    <h2>喜 剧</h2>
                     <Divider orientation="right">查看更多</Divider>
                     <div className="typeAll">
                         <div className="left">
@@ -254,17 +265,22 @@ const Home = (props: Props) => {
                             </div>
                         </div>
                         <div className="right">
-                            {arr.slice(0, 8).map(item => (
-                                <div className="rightItem">
-                                    <Card
-                                        hoverable
-                                        className="rightCard"
-                                        cover={<img alt="example" src={item.pic} />}
-                                    >
-                                        <Meta title={item.name} description={item.desc} />
-                                    </Card>
-                                </div>
-                            ))}
+                            {props.movice.moviceState
+                                .filter(item => item.type.includes('喜剧'))
+                                .slice(0, 8)
+                                .map(item => (
+                                    <div className="rightItem">
+                                        <Link to={`/detail/${item._id}`}>
+                                            <Card
+                                                hoverable
+                                                className="rightCard"
+                                                cover={<img alt="example" src={item.pic} />}
+                                            >
+                                                <Meta title={item.name} description={item.desc} />
+                                            </Card>
+                                        </Link>
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>
@@ -272,4 +288,4 @@ const Home = (props: Props) => {
         </div>
     );
 };
-export default connect()(Home);
+export default connect(state => state, { getMoviceData })(Home);
