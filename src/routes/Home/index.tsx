@@ -97,33 +97,45 @@ const Home = (props: Props) => {
     useEffect(() => {
         props.getMoviceData();
     }, []);
+    const xijuData = props.movice.moviceState
+        .filter(item => item.type.includes('喜剧'))
+        .slice(0, 8);
+    const xijuDatacopy = xijuData.sort(() => Math.random() - 0.5);
+    const dongzuoData = props.movice.moviceState
+        .filter(item => item.type.includes('动作'))
+        .slice(0, 8);
+    const dongzuoDatacopy = dongzuoData.sort(() => Math.random() - 0.5);
     return (
         <div className="home">
             <div className="homeChild">
                 <div className="carousel">
                     <Carousel autoplay>
                         <div>
-                            <h3>1</h3>
+                            <h3 className="one"></h3>
                         </div>
                         <div>
-                            <h3>2</h3>
+                            <h3 className="two"></h3>
                         </div>
                         <div>
-                            <h3>3</h3>
+                            <h3 className="three"></h3>
                         </div>
                         <div>
-                            <h3>4</h3>
+                            <h3 className="four"></h3>
                         </div>
                     </Carousel>
                 </div>
                 <h3 className="huanying">欢迎来到邓波的电影推荐网站</h3>
                 <div className="new">
                     <h2>最新电影</h2>
-                    <Divider orientation="right">查看更多</Divider>
+                    <Divider orientation="right">
+                        <Link to="/moviceall" target="_blank">
+                            查看更多
+                        </Link>
+                    </Divider>
                     <div className="newAll">
                         {props.movice.moviceState.slice(0, 12).map(item => (
                             <div className="newItem">
-                                <Link to={`/detail/${item._id}`}>
+                                <Link to={`/detail/${item._id}`} target="_blank">
                                     <Card
                                         hoverable
                                         className="newCard"
@@ -138,149 +150,201 @@ const Home = (props: Props) => {
                 </div>
                 <div className="type">
                     <h2>动 作</h2>
-                    <Divider orientation="right">查看更多</Divider>
+                    <Divider orientation="right">
+                        <Link to="/moviceall" target="_blank">
+                            查看更多
+                        </Link>
+                    </Divider>
                     <div className="typeAll">
                         <div className="left">
                             <div className="swiper">
                                 <Carousel autoplay>
                                     <div>
-                                        <h3>1</h3>
+                                        <h3 className="yi"></h3>
                                     </div>
                                     <div>
-                                        <h3>2</h3>
+                                        <h3 className="er"></h3>
                                     </div>
                                     <div>
-                                        <h3>3</h3>
+                                        <h3 className="san"></h3>
                                     </div>
                                     <div>
-                                        <h3>4</h3>
+                                        <h3 className="si"></h3>
                                     </div>
                                 </Carousel>
                             </div>
                             <h4>近期热播</h4>
                             <div className="bottom">
                                 <div className="topOne">
-                                    <img src="https://p0.meituan.net/movie/0355f74de087b699b85b7daa3d7881ec365712.jpg@464w_644h_1e_1c" />
-                                </div>
-                                <div className="topAll"></div>
-                            </div>
-                        </div>
-                        <div className="right">
-                            {props.movice.moviceState
-                                .filter(item => item.type.includes('动作'))
-                                .slice(0, 8)
-                                .map(item => (
-                                    <div className="rightItem">
-                                        <Link to={`/detail/${item._id}`}>
-                                            <Card
-                                                hoverable
-                                                className="rightCard"
-                                                cover={<img alt="example" src={item.pic} />}
-                                            >
-                                                <Meta title={item.name} description={item.desc} />
-                                            </Card>
-                                        </Link>
-                                    </div>
-                                ))}
-                        </div>
-                    </div>
-                </div>
-                <div className="type">
-                    <h2>喜 剧</h2>
-                    <Divider orientation="right">查看更多</Divider>
-                    <div className="typeAll">
-                        <div className="left">
-                            <div className="swiper">
-                                <Carousel autoplay>
-                                    <div>
-                                        <h3>1</h3>
-                                    </div>
-                                    <div>
-                                        <h3>2</h3>
-                                    </div>
-                                    <div>
-                                        <h3>3</h3>
-                                    </div>
-                                    <div>
-                                        <h3>4</h3>
-                                    </div>
-                                </Carousel>
-                            </div>
-                            <h4>近期热播</h4>
-                            <div className="bottom">
-                                <div className="topOne">
-                                    <img src="https://p0.meituan.net/movie/0355f74de087b699b85b7daa3d7881ec365712.jpg@464w_644h_1e_1c" />
+                                    <img src="https://p0.meituan.net/movie/a3d6ca3bdd5b0ddd7016acff9a9f2f2e2805813.jpg@464w_644h_1e_1c" />
                                 </div>
                                 <div className="topAll">
                                     <div className="topItem">
                                         <span>
                                             <span className="one other">1</span>
-                                            <span className="text">战狼 2</span>
+                                            <span className="text">{dongzuoDatacopy[0].name}</span>
                                         </span>
                                         <span className="topRight">997</span>
                                     </div>
                                     <div className="topItem">
                                         <span>
                                             <span className="two other">2</span>
-                                            <span className="text">战狼 2</span>
+                                            <span className="text">{dongzuoDatacopy[1].name}</span>
                                         </span>
-                                        <span className="topRight">997</span>
+                                        <span className="topRight">996</span>
                                     </div>
                                     <div className="topItem">
                                         <span>
                                             <span className="three other">3</span>
-                                            <span className="text">战狼 2</span>
+                                            <span className="text">{dongzuoDatacopy[2].name}</span>
                                         </span>
-                                        <span className="topRight">997</span>
+                                        <span className="topRight">995</span>
                                     </div>
                                     <div className="topItem">
                                         <span>
                                             <span className="other">4</span>
-                                            <span className="text">战狼 2</span>
+                                            <span className="text">{dongzuoDatacopy[3].name}</span>
                                         </span>
-                                        <span className="topRight">997</span>
+                                        <span className="topRight">994</span>
                                     </div>
                                     <div className="topItem">
                                         <span>
                                             <span className="other">5</span>
-                                            <span className="text">战狼 2</span>
+                                            <span className="text">{dongzuoDatacopy[4].name}</span>
                                         </span>
-                                        <span className="topRight">997</span>
+                                        <span className="topRight">993</span>
                                     </div>
                                     <div className="topItem">
                                         <span>
                                             <span className="other">6</span>
-                                            <span className="text">战狼 2</span>
+                                            <span className="text">{dongzuoDatacopy[5].name}</span>
                                         </span>
-                                        <span className="topRight">997</span>
+                                        <span className="topRight">992</span>
                                     </div>
                                     <div className="topItem">
                                         <span>
                                             <span className="other">7</span>
-                                            <span className="text">战狼 2</span>
+                                            <span className="text">{dongzuoDatacopy[6].name}</span>
                                         </span>
-                                        <span className="topRight">997</span>
+                                        <span className="topRight">990</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="right">
-                            {props.movice.moviceState
-                                .filter(item => item.type.includes('喜剧'))
-                                .slice(0, 8)
-                                .map(item => (
-                                    <div className="rightItem">
-                                        <Link to={`/detail/${item._id}`}>
-                                            <Card
-                                                hoverable
-                                                className="rightCard"
-                                                cover={<img alt="example" src={item.pic} />}
-                                            >
-                                                <Meta title={item.name} description={item.desc} />
-                                            </Card>
-                                        </Link>
+                            {dongzuoData.map(item => (
+                                <div className="rightItem">
+                                    <Link to={`/detail/${item._id}`} target="_blank">
+                                        <Card
+                                            hoverable
+                                            className="rightCard"
+                                            cover={<img alt="example" src={item.pic} />}
+                                        >
+                                            <Meta title={item.name} description={item.desc} />
+                                        </Card>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div className="type">
+                    <h2>喜 剧</h2>
+                    <Divider orientation="right">
+                        <Link to="/moviceall" target="_blank">
+                            查看更多
+                        </Link>
+                    </Divider>
+                    <div className="typeAll">
+                        <div className="left">
+                            <div className="swiper">
+                                <Carousel autoplay>
+                                    <div>
+                                        <h3 className="wu"></h3>
                                     </div>
-                                ))}
+                                    <div>
+                                        <h3 className="liu"></h3>
+                                    </div>
+                                    <div>
+                                        <h3 className="qi"></h3>
+                                    </div>
+                                    <div>
+                                        <h3 className="ba"></h3>
+                                    </div>
+                                </Carousel>
+                            </div>
+                            <h4>近期热播</h4>
+                            <div className="bottom">
+                                <div className="topOne">
+                                    <img src="https://p0.meituan.net/movie/f9dc4505ba214ad5d7648a3cb8483044446325.jpg@464w_644h_1e_1c" />
+                                </div>
+                                <div className="topAll">
+                                    <div className="topItem">
+                                        <span>
+                                            <span className="one other">1</span>
+                                            <span className="text">{xijuDatacopy[0].name}</span>
+                                        </span>
+                                        <span className="topRight">997</span>
+                                    </div>
+                                    <div className="topItem">
+                                        <span>
+                                            <span className="two other">2</span>
+                                            <span className="text">{xijuDatacopy[1].name}</span>
+                                        </span>
+                                        <span className="topRight">996</span>
+                                    </div>
+                                    <div className="topItem">
+                                        <span>
+                                            <span className="three other">3</span>
+                                            <span className="text">{xijuDatacopy[2].name}</span>
+                                        </span>
+                                        <span className="topRight">995</span>
+                                    </div>
+                                    <div className="topItem">
+                                        <span>
+                                            <span className="other">4</span>
+                                            <span className="text">{xijuDatacopy[3].name}</span>
+                                        </span>
+                                        <span className="topRight">994</span>
+                                    </div>
+                                    <div className="topItem">
+                                        <span>
+                                            <span className="other">5</span>
+                                            <span className="text">{xijuDatacopy[4].name}</span>
+                                        </span>
+                                        <span className="topRight">993</span>
+                                    </div>
+                                    <div className="topItem">
+                                        <span>
+                                            <span className="other">6</span>
+                                            <span className="text">{xijuDatacopy[5].name}</span>
+                                        </span>
+                                        <span className="topRight">992</span>
+                                    </div>
+                                    <div className="topItem">
+                                        <span>
+                                            <span className="other">7</span>
+                                            <span className="text">{xijuDatacopy[6].name}</span>
+                                        </span>
+                                        <span className="topRight">990</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="right">
+                            {xijuData.map(item => (
+                                <div className="rightItem">
+                                    <Link to={`/detail/${item._id}`} target="_blank">
+                                        <Card
+                                            hoverable
+                                            className="rightCard"
+                                            cover={<img alt="example" src={item.pic} />}
+                                        >
+                                            <Meta title={item.name} description={item.desc} />
+                                        </Card>
+                                    </Link>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

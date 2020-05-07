@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
-import { Carousel, Card, Divider } from 'antd';
+import { RouteComponentProps, Link } from 'react-router-dom';
+import { Carousel, Card, Divider, Empty } from 'antd';
 import './index.less';
 interface Params {}
 const { Meta } = Card;
@@ -117,22 +117,43 @@ const locationArr = [
 ];
 type Props = PropsWithChildren<RouteComponentProps<Params>>;
 const MoviceAll = (props: Props) => {
+    const [type, setType] = useState('全部');
+    const [time, setTime] = useState('全部');
+    const [location, setLocation] = useState('全部');
+    const getMviceData = () => {
+        console.log(11111);
+        let mviceData = props.movice.moviceState;
+        if (type !== '全部') {
+            console.log(222, type);
+            mviceData = mviceData.filter(item => item.type.includes(type.slice(0, 2)));
+        }
+        if (time !== '全部') {
+            console.log(333);
+            mviceData = mviceData.filter(item => item.releaseTime.slice(0, 4) == time);
+        }
+        if (location !== '全部') {
+            mviceData = mviceData.filter(item => item.location == location);
+        }
+        console.log(mviceData, '===mviceData');
+
+        return mviceData;
+    };
     return (
         <div className="home">
             <div className="homeChild">
                 <div className="carousel">
                     <Carousel autoplay>
                         <div>
-                            <h3>1</h3>
+                            <h3 className="aone"></h3>
                         </div>
                         <div>
-                            <h3>2</h3>
+                            <h3 className="atwo"></h3>
                         </div>
                         <div>
-                            <h3>3</h3>
+                            <h3 className="athree"></h3>
                         </div>
                         <div>
-                            <h3>4</h3>
+                            <h3 className="afour"></h3>
                         </div>
                     </Carousel>
                 </div>
@@ -141,7 +162,14 @@ const MoviceAll = (props: Props) => {
                         <span className="name">分类</span>
                         <span className="typeMovice">
                             {typeArr.map(item => (
-                                <span className="typeItem">{item}</span>
+                                <span
+                                    className={`${item === type ? 'action' : ''} typeItem`}
+                                    onClick={() => {
+                                        setType(item);
+                                    }}
+                                >
+                                    {item}
+                                </span>
                             ))}
                         </span>
                     </div>
@@ -149,7 +177,14 @@ const MoviceAll = (props: Props) => {
                         <span className="name">年代</span>
                         <span className="typeMovice">
                             {timeArr.map(item => (
-                                <span className="typeItem">{item}</span>
+                                <span
+                                    className={`${item === time ? 'action' : ''} typeItem`}
+                                    onClick={() => {
+                                        setTime(item);
+                                    }}
+                                >
+                                    {item}
+                                </span>
                             ))}
                         </span>
                     </div>
@@ -157,7 +192,14 @@ const MoviceAll = (props: Props) => {
                         <span className="name">地点</span>
                         <span className="typeMovice">
                             {locationArr.map(item => (
-                                <span className="typeItem">{item}</span>
+                                <span
+                                    className={`${item === location ? 'action' : ''} typeItem`}
+                                    onClick={() => {
+                                        setLocation(item);
+                                    }}
+                                >
+                                    {item}
+                                </span>
                             ))}
                         </span>
                     </div>
@@ -166,21 +208,29 @@ const MoviceAll = (props: Props) => {
                     <h2>所有电影</h2>
                     <Divider orientation="right">邓波电影网</Divider>
                     <div className="newAll">
-                        {arr.map(item => (
-                            <div className="newItem">
-                                <Card
-                                    hoverable
-                                    className="newCard"
-                                    cover={<img alt="example" src={item.pic} />}
-                                >
-                                    <Meta title={item.name} description={item.desc} />
-                                </Card>
+                        {getMviceData().length > 0 ? (
+                            getMviceData().map(item => (
+                                <div className="newItem">
+                                    <Link to={`/detail/${item._id}`} target="_blank">
+                                        <Card
+                                            hoverable
+                                            className="newCard"
+                                            cover={<img alt="example" src={item.pic} />}
+                                        >
+                                            <Meta title={item.name} description={item.desc} />
+                                        </Card>
+                                    </Link>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="empty">
+                                <Empty />
                             </div>
-                        ))}
+                        )}
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-export default connect()(MoviceAll);
+export default connect(state => state, {})(MoviceAll);

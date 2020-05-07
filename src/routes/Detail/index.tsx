@@ -39,6 +39,23 @@ const Detail = (props: Props) => {
     useDemo(chartGaugeRef, gaugeConfig(66.6));
 
     const moviceData = props.movice.moviceState.find(item => item._id === props.match.params.id);
+    const mabyLove = () => {
+        const selfType = props.profile.type[0];
+        const result = props.movice.moviceState;
+        const mabyLoveData = props.movice.moviceState.find(item => item.type.includes(selfType));
+        if (mabyLoveData.length > 5) {
+            return mabyLoveData.slice(0, 6);
+        } else {
+            if (mabyLoveData.length == 0) {
+                return props.movice.moviceState.slice(0, 6);
+            }
+            mabyLoveData.forEach(ele => {
+                result = result.filter(item => ele._id !== item._id);
+            });
+            const resultall = result.slice(0, 6 - mabyLoveData.length);
+            return [...resultall, ...mabyLoveData];
+        }
+    };
     const start = (arr: any, obj: any) => {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i]['uid'] == obj['uid']) {
