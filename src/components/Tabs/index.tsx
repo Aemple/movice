@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
-import { HomeOutlined, UserOutlined, FireTwoTone } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, VideoCameraTwoTone, ProjectTwoTone } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { getMoviceData } from '../../store/actions/movice';
 import './index.less';
@@ -15,9 +15,13 @@ const Tabs = (props: any) => {
                     <HomeOutlined></HomeOutlined>
                     <span className="text">首页</span>
                 </NavLink>
-                <NavLink to="/mine">
-                    <FireTwoTone twoToneColor="#eb2f96" />
-                    <span className="text">热播榜单</span>
+                <NavLink to="/moviceall">
+                    <VideoCameraTwoTone twoToneColor="#eb2f96" />
+                    <span className="text">电影片库</span>
+                </NavLink>
+                <NavLink to="/datacenter">
+                    <ProjectTwoTone twoToneColor="#1890ff" />
+                    <span className="text">数据中心</span>
                 </NavLink>
             </div>
             <NavLink to="/profile">

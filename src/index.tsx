@@ -19,6 +19,7 @@ import AdminLogin from './routes/AdminLogin';
 import Register from './routes/Register';
 import SetInfo from './routes/SetInfo';
 import AddMovice from './routes/AddMovice';
+import DataCenter from './routes/DataCenter';
 import Detail from './routes/Detail';
 import Notfound from './routes/Notfound';
 import { ConnectedRouter } from 'connected-react-router';
@@ -40,6 +41,7 @@ ReactDOM.render(
                             <Route path="/register" component={Register}></Route>
                             <Route path="/setInfo" component={SetInfo}></Route>
                             <Route path="/addmovice" component={AddMovice}></Route>
+                            <Route path="/datacenter" component={DataCenter}></Route>
                             <Route path="/detail/:id" component={Detail} />
                             <Route path="/notfound" component={Notfound} />
                             <Redirect to="/notfound" />
